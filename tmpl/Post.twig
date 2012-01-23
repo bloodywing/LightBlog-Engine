@@ -1,0 +1,10 @@
+{# empty Twig template #}
+
+{% extends "Main.twig" %}
+
+{% block articles %}
+<div id='articlehead'>
+    <h2><a href="/article/{{a.Title|replace(' ', '_')}}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:t") }}
+</div>
+<p id='body'>{{a.Body}}</p>
+{% endblock %}

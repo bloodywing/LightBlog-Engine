@@ -1,0 +1,18 @@
+{% from 'forms.twig' import input as forms %}
+<html>
+    <head>
+    {% block head %}
+            <title>Bitte einloggen</title>        
+    {% endblock %}
+    </head>
+    <body>
+        <p>
+        <form action="" method="POST">
+        {{ forms('login', user) }}
+        {{ forms('password', password, 'password') }}
+        {{ forms('submit', "Login", 'submit') }}
+        </form>
+            </p>
+    {{log}}
+    </body>
+</html>

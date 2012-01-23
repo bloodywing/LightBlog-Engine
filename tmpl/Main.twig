@@ -1,0 +1,12 @@
+<html>
+    <head>
+        {% include 'misc/head.twig' %}
+        <title>Nice Blog {{ pagename }}</title>        
+    </head>
+    <body>
+        <div id="content">
+        {% block articles %}
+        {% endblock %}
+        </div>
+    </body>
+</html>
