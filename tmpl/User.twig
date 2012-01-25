@@ -1,0 +1,16 @@
+{% extends 'Main.twig' %}
+
+{% block mini_login %}
+Yo, Y u not Log in?
+<form action="" method="post">
+    <label>User</label>
+    <input name="Name" />
+    <label>Password</label>
+    <input type="password" name="Password" />
+    <input type="submit" value="Ok" />
+</form>
+{% if user %}
+Hi {{ user.username }}
+{% endif %}
+{{ parent() }}
+{% endblock %}
