@@ -8,13 +8,17 @@ namespace entities;
  * @author pierre
  */
 class Article {
-    private $id;
-    private $author;
-    private $title;
-    private $body;
-    private $date;
-    private $tags = array();
+    private $id,
+            $author,
+            $title,
+            $body,
+            $date,
+            $tags = array();
     
+    /**
+     *
+     * @param \Silex\Application $app 
+     */
     public function save($app) {
         /* @var $db \Doctrine\MongoDB\Connection */
         $db =  $app['mongodb'];
@@ -32,7 +36,7 @@ class Article {
     
     /**
      *
-     * @param type $app
+     * @param \Silex\Application $app
      * @return \Doctrine\MongoDB\Cursor
      */
     public function getAll(\Silex\Application $app) {

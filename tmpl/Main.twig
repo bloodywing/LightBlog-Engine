@@ -1,9 +1,13 @@
 <html>
     <head>
         {% include 'misc/head.twig' %}
-        <title>Nice Blog {{ pagename }}</title>        
+        <title>Nice Blog {{ pagename|default('') }}</title>        
     </head>
     <body>
+        <div>
+        {% block mini_login %}
+        {% endblock %}
+        </div>
         <div id="content">
         {% block articles %}
         {% endblock %}

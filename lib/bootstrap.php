@@ -38,6 +38,33 @@ $app->register(new Silex\Provider\ValidatorServiceProvider(), array(
 ));
 
 /**
+ * Markdown Support
+ */
+
+$app->register(new SilexExtension\MarkdownExtension(), array(
+    'markdown.class_path' => __DIR__.'/../vendor/knplabs-markdown',
+    'markdown.features' => array(
+        'header' => true,
+        'list' => true,
+        'horizontal_rule' => true,
+        'table' => true,
+        'foot_note' => true,
+        'fenced_code_block' => true,
+        'abbreviation' => true,
+        'definition_list' => true,
+        'inline_link' => true,
+        'reference_link' => true,
+        'shortcut_link' => true,
+        'block_quote' => true,
+        'code_block' => true,
+        'html_block' => true,
+        'auto_link' => true,
+        'auto_mailto' => true,
+        'entities' => false
+    )
+));
+
+/**
  * MongoDB 
  */
 $app->register(new SilexExtension\MongoDbExtension(), array(
@@ -57,5 +84,10 @@ $app->register(new SilexExtension\MongoDbExtension(), array(
  */
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+
+/**
+ * The Sessionprovider, based on Symfony 2 
+ */
+$app->register(new Silex\Provider\SessionServiceProvider());
 
 ?>
