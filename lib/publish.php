@@ -2,6 +2,7 @@
 
 include 'bootstrap.php';
 include 'auth.php';
+include 'user_panel.php';
 
 use entities\Article;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,6 @@ function get_articles() {
          */
         $posts[] = $post;
     }
-
     return $app['twig']->render('Articles.twig', array('articles' => $posts));
 }
 
@@ -48,6 +48,24 @@ function get_article($title) {
     return $app['twig']->render('Post.twig', array('a' => $oneArticle));
 }
 
+function post_article($postdata) {
+    global $app;
+    $article = new Article();
+    $session = $app['session']->get('user');
+   $poster = (isset($session['Author'])) ?  $session['Author'] :  $session['Name'];
+    
+   $article->setAuthor($poster);
+   $article->setBody($postdata['Body']);
+   
+   if($postdata['Tags']) {
+       $tags = explode(';', $postdata['Tags']);
+   }
+   
+   $article->setTags($tags);
+   $article->setTitle($postdata['Title']);
+   $article->setDate(time());
+   $article->save($app);
+}
 /**
  * Starts running the Blog strongly depends on Silex functions
  * @global Silex\Application $app
@@ -56,11 +74,18 @@ function get_article($title) {
 function blog_run() {
     global $app;
 
-    $app->get('/{pageName}', function($pageName) {
+    $app->get('/{pageName}', function($pageName, Silex\Application $app) {
                 $page = '';
                 switch ($pageName) {
                     case 'login' :
                         $page = show_login();
+                        break;
+                    case 'account' :
+                        $page = show_account();
+                        break;
+                    case 'logout':
+                        $app['session']->clear();
+                        $page = $app->redirect('/');
                         break;
                     case 'index' :
                         $page = get_articles();
@@ -74,10 +99,26 @@ function blog_run() {
                 $postdata = array();
                 $postdata['Name']     = $post->get('Name');
                 $postdata['Password'] = $post->get('Password');
+                $postdata['Email']    = $post->get('Email');
+                $postdata['Body']     = $post->get('Body');
+                $postdata['Tags']     = $post->get('Tags');  
+                $postdata['Title']    = $post->get('Title');
+                
                 
                 switch ($pageName) {
                     case 'login' :
-                        $page = do_login($postdata);
+                        do_login($postdata);
+                        $page = show_account();
+                        break;
+                    case 'register':
+                        if(!NOREG) {
+                            $page = do_register($postdata);
+                        } else {
+                            $page = $app->redirect('/');
+                        }
+                        break;
+                    case 'post_article':
+                        post_article($postdata);
                         break;
                 }
                 if($page === false) {
@@ -94,7 +135,6 @@ function blog_run() {
     $app->get('/article/{article_title}', function($article_title) {
                 return get_article($article_title);
             });
-
     $app->run();
 }
 

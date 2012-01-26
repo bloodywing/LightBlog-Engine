@@ -44,7 +44,7 @@ class Article {
         $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'articles');
-        return $collection->find();
+        return $collection->find()->sort(array('_id' => 0));
     }
     
     public function getOne(\Silex\Application $app, $title) {

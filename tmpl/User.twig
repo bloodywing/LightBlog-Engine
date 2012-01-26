@@ -1,16 +1,32 @@
 {% extends 'Main.twig' %}
 
 {% block mini_login %}
-Yo, Y u not Log in?
-<form action="" method="post">
+{% if user %}
+{# User is logged in now, time to say hi #}
+Hi {{ user.Name }}
+{% else %}
+Please Log in
+<form action="/login" method="post">
     <label>User</label>
     <input name="Name" />
     <label>Password</label>
     <input type="password" name="Password" />
     <input type="submit" value="Ok" />
 </form>
-{% if user %}
-Hi {{ user.username }}
+
+No Account Yet?
+
+<form action="/register" method="post">
+    <label>User</label>
+    <input name="Name" />
+    <label>Password</label>
+    <input type="password" name="Password" />
+    <label>Authoralias</label>
+    <input name="Author" />
+    <label>Email</label>
+    <input name="Email" />
+    <input type="submit" value="Ok" />
+</form>
 {% endif %}
 {{ parent() }}
 {% endblock %}

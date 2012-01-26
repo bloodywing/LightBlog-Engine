@@ -4,7 +4,7 @@
 
 {% block articles %}
 <div id='articlehead'>
-    <h2><a href="/article/{{a.Title|replace(' ', '_')}}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:t") }}
+    <h2><a href="/article/{{ a.Title|replace(' ', '_') }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
 </div>
-<p id='body'>{{a.Body}}</p>
+<p id='body'>{{a.Body|markdown}}</p>
 {% endblock %}

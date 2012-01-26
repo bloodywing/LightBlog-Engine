@@ -1,0 +1,16 @@
+{% extends 'Main.twig' %}
+
+{% block quickpost %}
+<form action="/post_article" method="POST">
+    <ul>
+        <li><label>Article Title:</label><br />
+            <input name="Title" size="50"/></li>
+        <li><label>Articlebody:</label><br/>
+            <textarea style="width: 80%; height: 400px" name="Body"/></textarea></li>
+        <li><label>Tags:</label><small>Seperate with ";"</small><br /> 
+            <textarea name="Tags" style="width: 80%"></textarea>
+            
+        <li><input type="submit" value="Ok" /> :: <input type="reset" value="Reset"/></li>
+    </ul>
+</form>
+{% endblock %}
