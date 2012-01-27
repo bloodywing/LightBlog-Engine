@@ -1,10 +1,24 @@
-{# empty Twig template #}
-
 {% extends "Main.twig" %}
 
 {% block articles %}
 <div id='articlehead'>
     <h2><a href="/article/{{ a.Title|replace(' ', '_') }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
 </div>
-<p id='body'>{{a.Body|markdown}}</p>
+<div id='body'>{{a.Body|markdown}}</div>
+{% endblock %}
+
+{% block opengraph %}
+{% set url = {'article_title': a.Title|replace(' ', '_') } %}
+<meta property="og:title" content="{{ a.Title }}" />
+<meta property="og:type" content="article" />
+<meta property="og:description" content="{{a.Body|markdown|striptags}}" />
+<meta property="og:url" content="{{ app.url_generator.generate('article_url', url, 1) }}" />
+<meta property="og:locale" content="de_DE" />
+{{ parent() }}
+{% endblock %}
+
+{% block article_meta %}
+<meta name="keywords" content="{{ a.Tags|join(',') }}" />
+<meta name="description" content="{% block description %}{% endblock %}" />
+{{ parent() }}
 {% endblock %}

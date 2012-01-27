@@ -1,0 +1,18 @@
+# TODO
+## Missing Features
+
+* comment forms in article view
+* implent tags
+* excerpt function
+* light template to start with
+* pinned articles
+
+
+## planed enhancements
+
+* editor overhaul
+* make articles editable
+* set date manual
+* automatic keywords and site description depending on current article/articles
+* documentation
+* pagination

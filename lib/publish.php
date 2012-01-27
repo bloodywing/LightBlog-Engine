@@ -13,15 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
  * @return String 
  * @todo set a limit
  */
-function get_articles() {
+function get_articles($range = 0) {
     /* @var $app Silex\Application */
     global $app;
-
-    $collection = 'articles';
+    
+    //$collection = 'articles';
     $article = new Article();
     /* @var $cursor Doctrine\MongoDB\LoggableCursor */
-    $cursor = $article->getAll($app);
-
+        $cursor = $article->getRange($app, $range);
+        $article_count = $cursor->count();
+        $article_pos = $cursor->count(true);
+        $end = false;
+        if($article_pos < ARTICLE_LIMIT || (($range+1) * ARTICLE_LIMIT) == $article_count) {
+            $end = true;
+        }
+        
     $posts = '';
     foreach ($cursor->toArray() as $post) {
         /**
@@ -29,7 +35,7 @@ function get_articles() {
          */
         $posts[] = $post;
     }
-    return $app['twig']->render('Articles.twig', array('articles' => $posts));
+    return $app['twig']->render('Articles.twig', array('articles' => $posts, 'nextpage' => $range + 1, 'end' => $end));
 }
 
 /**
@@ -48,24 +54,31 @@ function get_article($title) {
     return $app['twig']->render('Post.twig', array('a' => $oneArticle));
 }
 
+function del_article($id) {
+    global $app;
+    $article = new Article();
+    return $article->delArticle($app, $id);
+}
+
 function post_article($postdata) {
     global $app;
     $article = new Article();
     $session = $app['session']->get('user');
-   $poster = (isset($session['Author'])) ?  $session['Author'] :  $session['Name'];
-    
-   $article->setAuthor($poster);
-   $article->setBody($postdata['Body']);
-   
-   if($postdata['Tags']) {
-       $tags = explode(';', $postdata['Tags']);
-   }
-   
-   $article->setTags($tags);
-   $article->setTitle($postdata['Title']);
-   $article->setDate(time());
-   $article->save($app);
+    $poster = (isset($session['Author'])) ? $session['Author'] : $session['Name'];
+
+    $article->setAuthor($poster);
+    $article->setBody($postdata['Body']);
+
+    if ($postdata['Tags']) {
+        $tags = explode(';', $postdata['Tags']);
+    }
+
+    $article->setTags($tags);
+    $article->setTitle($postdata['Title']);
+    $article->setDate(time());
+    $article->save($app);
 }
+
 /**
  * Starts running the Blog strongly depends on Silex functions
  * @global Silex\Application $app
@@ -81,7 +94,7 @@ function blog_run() {
                         $page = show_login();
                         break;
                     case 'account' :
-                        $page = show_account();
+                        ($app['session']->get('user')) ? $page = show_account() : $page = $app->redirect('/');
                         break;
                     case 'logout':
                         $app['session']->clear();
@@ -90,6 +103,12 @@ function blog_run() {
                     case 'index' :
                         $page = get_articles();
                         break;
+                    /**
+                     * @todo That cast looks ugly, but it works at least 
+                     */
+                    case!is_null(preg_match('/\d+/', $pageName, $i)):
+                        $page = get_articles($i[0]);
+                        break;
                 }
                 return $page;
             })->value('pageName', 'index');
@@ -97,21 +116,20 @@ function blog_run() {
     $app->post('/{pageName}', function($pageName, Request $post, Silex\Application $app) {
                 $page = '';
                 $postdata = array();
-                $postdata['Name']     = $post->get('Name');
+                $postdata['Name'] = $post->get('Name');
                 $postdata['Password'] = $post->get('Password');
-                $postdata['Email']    = $post->get('Email');
-                $postdata['Body']     = $post->get('Body');
-                $postdata['Tags']     = $post->get('Tags');  
-                $postdata['Title']    = $post->get('Title');
-                
-                
+                $postdata['Email'] = $post->get('Email');
+                $postdata['Body'] = $post->get('Body');
+                $postdata['Tags'] = $post->get('Tags');
+                $postdata['Title'] = $post->get('Title');
+
                 switch ($pageName) {
                     case 'login' :
                         do_login($postdata);
                         $page = show_account();
                         break;
                     case 'register':
-                        if(!NOREG) {
+                        if (!NOREG) {
                             $page = do_register($postdata);
                         } else {
                             $page = $app->redirect('/');
@@ -119,9 +137,14 @@ function blog_run() {
                         break;
                     case 'post_article':
                         post_article($postdata);
+                        return $app->redirect('/');
+                        break;
+                    case 'del':
+                        del_article($post->get('article_id'));
+                        return $app->redirect('/');
                         break;
                 }
-                if($page === false) {
+                if ($page === false) {
                     /**
                      * Returns the User back to the Loginpage 
                      */
@@ -133,8 +156,10 @@ function blog_run() {
 
 
     $app->get('/article/{article_title}', function($article_title) {
-                return get_article($article_title);
-            });
+                        return get_article($article_title);
+                    })
+            ->bind('article_url');
+
     $app->run();
 }
 

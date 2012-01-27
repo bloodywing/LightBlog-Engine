@@ -3,11 +3,20 @@
 {% extends "Main.twig" %}
 
 {% block articles %}
+{% set pagename = 'Articles' %}
 {% for a in articles %}
-<div id='articlehead'>
+<div class='articlehead'>
     <h2><a href="/article/{{ a.Title|replace(' ', '_') }}">{{ a.Title }}</a></h2> :: 
     <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+    {% if app.session.get('user') %}
+    <em><form action="/del" method="POST">
+            <input hidden="true" name="article_id" value="{{ a._id }}"/>
+            <input type="submit" value="D"/></form></em>
+    {% endif %}
 </div>
-<p id='body'>{{ a.Body|markdown}}</p>
+<div class='body'>{{ a.Body|markdown}}</div>
 {% endfor %}
+{% if end is sameas(false) %}
+<a href="/{{ nextpage }}">Next Page</a>
+{% endif %}
 {% endblock %}

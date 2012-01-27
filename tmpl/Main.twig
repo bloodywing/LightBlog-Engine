@@ -1,18 +1,24 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xml:lang="de">
     <head>
-        {% include 'misc/head.twig' %}
-        <title>Nice Blog {{ pagename|default('') }}</title>        
-    </head>
-    <body>
-        <div>
+        {% include "misc/css.twig" %}
+            {% block opengraph %}
+            {% endblock %}
+            {% block article_meta %}
+            {% include 'misc/head.twig' %}
+            {% endblock %}
+            <title>{{ constant('BLOGNAME') }} :: {{ pagename|default('') }}</title>        
+        </head>
+        <body>
+            <div>
         {% block mini_login %}
         {% endblock %}
-        </div>
-        <div id="content">
+                </div>
+                <div id="content">
         {% block quickpost %}
         {% endblock %}
         {% block articles %}
         {% endblock %}
-        </div>
-    </body>
-</html>
+                    </div>
+                </body>
+            </html>
