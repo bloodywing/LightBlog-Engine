@@ -15,10 +15,13 @@
         {% endblock %}
                 </div>
                 <div id="content">
+                    
         {% block quickpost %}
         {% endblock %}
+                    
         {% block articles %}
         {% endblock %}
                     </div>
+                {% include "misc/footer.twig" %}
                 </body>
             </html>

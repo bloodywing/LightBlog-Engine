@@ -1,14 +1,14 @@
 {% extends "Main.twig" %}
-
+{% set pagename = a.Title %}
 {% block articles %}
 <div id='articlehead'>
-    <h2><a href="/article/{{ a.Title|replace(' ', '_') }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+    <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
 </div>
 <div id='body'>{{a.Body|markdown}}</div>
 {% endblock %}
 
 {% block opengraph %}
-{% set url = {'article_title': a.Title|replace(' ', '_') } %}
+{% set url = {'article_title': a.Title|url_encode() } %}
 <meta property="og:title" content="{{ a.Title }}" />
 <meta property="og:type" content="article" />
 <meta property="og:description" content="{{a.Body|markdown|striptags}}" />

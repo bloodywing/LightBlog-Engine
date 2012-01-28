@@ -12,7 +12,7 @@ $app = new Silex\Application();
  * Turn Debug on or off 
  */
 (DEBUG == 1) ? $app['debug'] = true : $app['debug'] = false;
-
+(DEBUG == 1) ? error_reporting(E_ALL) : error_reporting(E_WARNING);
 /**
  * Twig as Tempatesystem 
  */
@@ -25,6 +25,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 use Symfony\Component\ClassLoader\UniversalClassLoader;
+
 $loader = new UniversalClassLoader();
 $loader->registerNameSpace('entities', __DIR__);
 $loader->register();
@@ -32,7 +33,6 @@ $loader->register();
 /**
  * Symfony Validator Extension 
  */
-
 $app->register(new Silex\Provider\ValidatorServiceProvider(), array(
     'validator.class_path' => __DIR__.'/../vendor/symfony/src'
 ));
@@ -40,7 +40,6 @@ $app->register(new Silex\Provider\ValidatorServiceProvider(), array(
 /**
  * Markdown Support
  */
-
 $app->register(new SilexExtension\MarkdownExtension(), array(
     'markdown.class_path' => __DIR__.'/../vendor/knplabs-markdown',
     'markdown.features' => array(
@@ -82,7 +81,6 @@ $app->register(new SilexExtension\MongoDbExtension(), array(
  * Register some needed providers 
  * You can simply add more here
  */
-
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 /**

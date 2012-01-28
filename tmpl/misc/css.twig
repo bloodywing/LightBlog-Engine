@@ -1,9 +1,12 @@
 <style type="text/css">
+        {% set contentwidth = "50%" %}
         html { color: #000; background: #eee; padding: 10px }
         body { font: 11px Verdana, Arial, sans-serif; color: #333 }
         img { border: 0; }
         h2 {display: inline-block; margin: 1em 5px 0px 0 }
-        #content { width:970px; margin:0 auto; padding: 25px; border: 1px solid}
+        #content { width: {{ contentwidth }}; margin:0 auto; padding: 25px; border: 1px solid}
+        #footer {width: {{ contentwidth }}; margin: 0 auto;}
         .body {margin: 0 0 0 0}
         .articlehead {background: #fff}
-</style>
+        .article_tools em {display: inline-block}
+    </style>

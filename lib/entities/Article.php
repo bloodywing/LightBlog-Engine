@@ -17,7 +17,7 @@ class Article {
     
     /**
      *
-     * @param \Silex\Application $app 
+     * @param \Silex\Application $app
      */
     public function save($app) {
         /* @var $db \Doctrine\MongoDB\Connection */
@@ -31,7 +31,7 @@ class Article {
             'Date'   => $this->date,
             'Tags'   => $this->tags
         );
-        return $collection->insert($self, array('safe' => true));
+        return $collection->update(array('_id' => new \MongoId($this->getId())), $self, array('upsert' => true));
         
         
     }
@@ -46,7 +46,7 @@ class Article {
         $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'articles');
-        return $collection->find()->sort(array('_id' => 0));
+        return $collection->find()->sort(array('Date' => 0));
     }
 
     /**
@@ -62,13 +62,19 @@ class Article {
         return $collection->find()->sort(array('_id' => 0))->limit(ARTICLE_LIMIT)->skip($range * ARTICLE_LIMIT);
     }
 
-    
-    public function getOne(\Silex\Application $app, $title) {
+    /**
+     * Gets a single Article
+     * @param \Silex\Application $app
+     * @param mixed $field Fieldname in your MongoDB
+     * @param mixed $term Term to search for
+     * @return mixed 
+     */
+    public function getOne(\Silex\Application $app, $field = 'Title', $term) {
         /* @var $db \Doctrine\MongoDB\Connection */
         $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'articles');
-        return $collection->findOne(array('Title' => $title));
+        return $collection->findOne(array($field => $term));
     }
     
     public function delArticle(\Silex\Application $app, $id) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for a in articles %}
+        <url>
+            <loc>{{ app.url_generator.generate('article_url', {'article_title' : a.Title|url_encode}, 1) }}</loc>
+            <lastmod>{{ a.Date|date('c') }}</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>0.5</priority>
+        </url>
+    
+{% endfor%}
+</urlset>

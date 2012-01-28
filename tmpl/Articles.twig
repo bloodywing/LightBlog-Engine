@@ -6,15 +6,23 @@
 {% set pagename = 'Articles' %}
 {% for a in articles %}
 <div class='articlehead'>
-    <h2><a href="/article/{{ a.Title|replace(' ', '_') }}">{{ a.Title }}</a></h2> :: 
+    <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: 
     <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
     {% if app.session.get('user') %}
+    <div class="article_tools">
     <em><form action="/del" method="POST">
             <input hidden="true" name="article_id" value="{{ a._id }}"/>
             <input type="submit" value="D"/></form></em>
+    
+    <em><form action="/edit" method="POST">
+            <input hidden="true" name="article_id" value="{{ a._id }}"/>
+            <input type="submit" value="E"/></form></em>
+            </div>
     {% endif %}
 </div>
-<div class='body'>{{ a.Body|markdown}}</div>
+<div class='body'>
+{{ a.Body|markdown}}
+    </div>
 {% endfor %}
 {% if end is sameas(false) %}
 <a href="/{{ nextpage }}">Next Page</a>

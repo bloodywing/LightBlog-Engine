@@ -1,14 +1,21 @@
 {% extends 'Main.twig' %}
 
 {% block quickpost %}
+{% if a is defined %}
+<form action="/save_article" method="POST">
+    <input hidden="true" name="Date" value="{{ a.Date }}">
+    <input hidden="true" name="ID" value="{{ a._id }}">
+{% else %}
 <form action="/post_article" method="POST">
+    {% endif %}
     <ul>
+        
         <li><label>Article Title:</label><br />
-            <input name="Title" size="50"/></li>
+            <input name="Title" size="50" value="{{ a.Title|default('') }}"/></li>
         <li><label>Articlebody:</label><br/>
-            <textarea style="width: 80%; height: 400px" name="Body"/></textarea></li>
+            <textarea style="width: 80%; height: 400px" name="Body"/>{{ a.Body|default('') }}</textarea></li>
         <li><label>Tags:</label><small>Seperate with ";"</small><br /> 
-            <textarea name="Tags" style="width: 80%"></textarea>
+            <textarea name="Tags" style="width: 80%">{{ a.Tags|default('')|join(';') }}</textarea>
             
         <li><input type="submit" value="Ok" /> :: <input type="reset" value="Reset"/></li>
     </ul>
