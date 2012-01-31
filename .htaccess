@@ -2,8 +2,6 @@
     Options -MultiViews
 
     RewriteEngine On
-    RewriteCond %{HTTP_HOST} !^tastyespresso\.de
-    RewriteRule ^(.*)$ http://tastyespresso.de/$1 [R=301,L]
    #RewriteBase /path/to/app
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php
