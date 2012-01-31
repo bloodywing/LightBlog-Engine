@@ -1,0 +1,12 @@
+[submodule "vendor/knplabs-markdown/Knp/Bundle/MarkdownBundle"]
+        path = vendor/knplabs-markdown/Knp/Bundle/MarkdownBundle
+        url = git://github.com/KnpLabs/KnpMarkdownBundle.git
+[submodule "vendor/twig"]
+        path = vendor/twig
+        url = https://github.com/fabpot/Twig
+[submodule "vendor/mongodb"]
+        path = vendor/mongodb
+        url = https://github.com/doctrine/mongodb
+[submodule "vendor/doctrine/common"]
+	path = vendor/doctrine/common
+	url = https://github.com/doctrine/common.git

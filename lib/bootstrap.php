@@ -17,7 +17,7 @@ $app = new Silex\Application();
  * Twig as Tempatesystem 
  */
 
-$app['autoloader']->registerNamespace('SilexExtension', __DIR__ . '/../vendor/silex-extension/src');
+$app['autoloader']->registerNamespace('SilexExtension', __DIR__ . '/../vendor/silex-extensions/src');
 $app['autoloader']->register();
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.class_path' => __DIR__.'/../vendor/twig/lib',

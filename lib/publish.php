@@ -1,8 +1,8 @@
 <?php
 
-include 'bootstrap.php';
-include 'auth.php';
-include 'user_panel.php';
+require 'bootstrap.php';
+require 'auth.php';
+require 'user_panel.php';
 
 use entities\Article;
 use Symfony\Component\HttpFoundation\Request;

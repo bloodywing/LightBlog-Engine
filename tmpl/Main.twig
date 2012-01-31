@@ -5,12 +5,14 @@
             {% block opengraph %}
             {% endblock %}
             {% block article_meta %}
-            {% include 'misc/head.twig' %}
+            {% include "misc/head.twig" %}
             {% endblock %}
             <title>{{ constant('BLOGNAME') }} :: {{ pagename|default('') }}</title>        
         </head>
         <body>
             <div>
+                
+        {% include "misc/navigation.twig" %}
         {% block mini_login %}
         {% endblock %}
                 </div>
