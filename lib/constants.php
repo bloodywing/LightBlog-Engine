@@ -31,7 +31,15 @@ define('ARTICLE_LIMIT', 5);
 define('OG', 1);
 
 /**
+ * enable or disable Feeds 
+ */
+
+define('FEEDS', 1);
+
+/**
  * Your blog's name 
  */
 define('BLOGNAME', 'Bloodys Blog');
+
+define('BLOGURL', 'http://tastyespresso.de');
 ?>

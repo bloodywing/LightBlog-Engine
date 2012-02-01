@@ -1,10 +1,16 @@
 {% extends "Main.twig" %}
+
 {% set pagename = a.Title %}
 {% block articles %}
-<div id='articlehead'>
-    <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+<div class="article">
+    <div id='articlehead'>
+        <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+    </div>
+    <div id='body'>{{a.Body|markdown}}</div>
 </div>
-<div id='body'>{{a.Body|markdown}}</div>
+<div id="pre_footer">
+    <a href="#" onclick="window.history.back()">Back</a>
+</div>
 {% endblock %}
 
 {% block opengraph %}
@@ -18,6 +24,7 @@
 {% endblock %}
 
 {% block article_meta %}
+
 <meta name="keywords" content="{{ a.Tags|join(',') }}" />
 <meta name="description" content="{% block description %}{% endblock %}" />
 {{ parent() }}

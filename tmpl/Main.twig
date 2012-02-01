@@ -7,17 +7,13 @@
             {% block article_meta %}
             {% include "misc/head.twig" %}
             {% endblock %}
-            <title>{{ constant('BLOGNAME') }} :: {{ pagename|default('') }}</title>        
+            <title>{{ constant('BLOGNAME') }} :: {{ pagename|default('Index') }}</title>        
         </head>
         <body>
-            <div>
-                
         {% include "misc/navigation.twig" %}
-        {% block mini_login %}
-        {% endblock %}
-                </div>
                 <div id="content">
-                    
+        {% block mini_login %}
+        {% endblock %}            
         {% block quickpost %}
         {% endblock %}
                     

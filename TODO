@@ -2,17 +2,16 @@
 ## Missing Features
 
 * comment forms in article view
-* implent tags
+* implent tags - Already safed in your MongoDB
 * excerpt function
-* light template to start with
+* light template to start with - Almost Done
 * pinned articles
-
+* ATOM XML
+* Installer for constants.php
 
 ## planed enhancements
 
 * editor overhaul
-* make articles editable
 * set date manual
 * automatic keywords and site description depending on current article/articles
 * documentation
-* pagination

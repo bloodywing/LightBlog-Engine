@@ -5,6 +5,8 @@
 {% block articles %}
 {% set pagename = 'Articles' %}
 {% for a in articles %}
+
+<div class="article">
 <div class='articlehead'>
     <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: 
     <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
@@ -12,19 +14,29 @@
     <div class="article_tools">
     <em><form action="/del" method="POST">
             <input hidden="true" name="article_id" value="{{ a._id }}"/>
-            <input type="submit" value="D"/></form></em>
+            <input type="submit" value="Delete"/></form></em>
     
     <em><form action="/edit" method="POST">
             <input hidden="true" name="article_id" value="{{ a._id }}"/>
-            <input type="submit" value="E"/></form></em>
+            <input type="submit" value="Edit"/></form></em>
             </div>
     {% endif %}
 </div>
 <div class='body'>
-{{ a.Body|markdown}}
-    </div>
+    {{ a.Body|markdown}}
+</div>
+</div>
 {% endfor %}
+
+<div id="pre_footer">
+{# Next/Prev Page Links #}
+{% if nextpage - 2 == 0 %}
+        <a href="/">First Page</a> |&nbsp;
+{% elseif nextpage - 2 > 0 %}
+<a href="/{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
+{% endif %}
 {% if end is sameas(false) %}
 <a href="/{{ nextpage }}">Next Page</a>
 {% endif %}
+</div>
 {% endblock %}

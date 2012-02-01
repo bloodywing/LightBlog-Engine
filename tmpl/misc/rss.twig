@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+    <title>{{ constant('BLOGNAME') }}</title>
+    <link>{{ constant('BLOGURL') }}</link>
+    
+    {% for a in articles %}
+    <item>
+        <title>{{ a.Title }}</title>
+        <description><![CDATA[{{ a.Body }}]]></description>
+        <link>{{ app.url_generator.generate('article_url', {'article_title' : a.Title|url_encode}, 1) }}</link>
+        <author>{{ a.Author }}</author>
+    </item>
+    {% endfor %}
+</channel>
+</rss>

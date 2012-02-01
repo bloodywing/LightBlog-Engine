@@ -122,6 +122,9 @@ function blog_run() {
                     case 'sitemap.xml':
                         $page = include(__DIR__."/extras/sitemap.php");
                         break;
+                    case 'rss.xml':
+                        $page = include(__DIR__."/extras/feed.php");
+                        break;
                     /**
                      * @todo That cast looks ugly, but it works at least 
                      */
@@ -188,6 +191,8 @@ function blog_run() {
                     })
             ->bind('article_url');
 
+    $app->get('/rss.xml', function() {
+    });
     $app->run();
 }
 
