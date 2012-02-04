@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>{{ constant('BLOGNAME') }}</title>
+    <link>{{ constant('BLOGURL') }}</link>
+    <atom:link href="{{ constant('BLOGURL') }}/rss.xml" rel="self" type="application/rss+xml" />
+    <description>{{ constant('BLOGSLOGAN') }}</description>
+    {% for a in articles %}
+    <item>
+        <title>{{ a.Title }}</title>
+        <description><![CDATA[{{ a.Body|markdown }}]]></description>
+        <guid>{{ app.url_generator.generate('article_url', { 'article_title' : a.Title|url_encode, 'id': a._id }, 1) }}</guid>
+        <link>{{ app.url_generator.generate('article_url', { 'article_title' : a.Title|url_encode, 'id': a._id }, 1) }}</link>
+        <author>{{ a.Author }}@tastyespresso.de</author>
+    </item>
+    {% endfor %}
+</channel>
+</rss>

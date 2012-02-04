@@ -1,28 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xml:lang="de">
     <head>
-        {% include "misc/css.twig" %}
             {% block opengraph %}
             {% endblock %}
             {% block article_meta %}
             {% include "misc/head.twig" %}
             {% endblock %}
-            <title>{{ constant('BLOGNAME') }} :: {{ pagename|default('') }}</title>        
+            <link rel="stylesheet" type="text/css" href="/css" media="all" />
+            <title>{{ constant('BLOGNAME') }} - {{ constant('BLOGSLOGAN') }} :: {{ pagename|default('Index') }}</title>        
+            
         </head>
         <body>
-            <div>
-                
+            <div id="slogan"><h1><em>{{ constant('BLOGSLOGAN') }}</em></h1></div>
         {% include "misc/navigation.twig" %}
-        {% block mini_login %}
-        {% endblock %}
-                </div>
                 <div id="content">
-                    
+        {% block mini_login %}
+        {% endblock %}            
         {% block quickpost %}
+                        {% set article_form = true %}
         {% endblock %}
                     
         {% block articles %}
         {% endblock %}
+                        {% block commentform %}
+                        
+                        {% endblock %}
                     </div>
                 {% include "misc/footer.twig" %}
                 </body>

@@ -23,6 +23,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.class_path' => __DIR__.'/../vendor/twig/lib',
     'twig.path'     => __DIR__.'/../tmpl/'
 ));
+$app['twig']->addExtension(new Twig_Extension_Debug());
 
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
@@ -71,7 +72,7 @@ $app->register(new SilexExtension\MongoDbExtension(), array(
     'mongodb.connection'    =>  array(
         'configuration' =>  function($configuration) {
         $configuration->setLoggerCallable(function($logs){
-            (DEBUG == 1) ? print_r($logs) : null;
+           // (DEBUG == 1) ? print_r($logs) : null;
           });
         }
     )

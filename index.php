@@ -11,6 +11,7 @@
     
     require LIB.'/constants.php';
     require LIB.'/publish.php';
+    require LIB.'/additions.php';
     
     blog_run();
 ?>
