@@ -3,13 +3,13 @@
 {% extends "Main.twig" %}
 
 {% block articles %}
-{% set pagename = 'Articles' %}
+<a id="top"></a>
 {% for a in articles %}
 
-<div class="article">
+<div class="article {{ cycle(['odd', 'even'], loop.index) }}">
 <div class='articlehead'>
-    <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: 
-    <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+    <h2><a id="{{'a' ~ loop.index }}" href="/article/{{ a.Title|url_encode() }}/{{ a._id }}">{{ a.Title }}</a></h2><small> :: 
+    {{ a.Author }} :: {{ a.Date.sec|date("d/m/Y") }}</small>
     {% if app.session.get('user') %}
     <div class="article_tools">
     <em><form action="/del" method="POST">
@@ -24,19 +24,42 @@
 </div>
 <div class='body'>
     {{ a.Body|markdown}}
+
 </div>
+<span>Category: </span> <a href="{{ app.url_generator.generate('category_url', { 'category' : a.Category }, 0) }}">{{ a.Category|title }}</a>
 </div>
 {% endfor %}
 
 <div id="pre_footer">
+
 {# Next/Prev Page Links #}
+{% if findby.Category %}
 {% if nextpage - 2 == 0 %}
-        <a href="/">First Page</a> |&nbsp;
+<a href="/category/{{findby.Category}}">First Page</a> |&nbsp;
 {% elseif nextpage - 2 > 0 %}
-<a href="/{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
+<a href="/category/{{findby.Category}}/{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
 {% endif %}
-{% if end is sameas(false) %}
-<a href="/{{ nextpage }}">Next Page</a>
+
+    {% if end is sameas(false) %}
+        <a href="/category/{{findby.Category}}/{{ nextpage }}">Next Page</a>
+    {% endif %}
+{% else %}
+        
+{% if nextpage - 2 == 0 %}
+<a href="/">First Page</a> |&nbsp;
+{% elseif nextpage - 2 > 0 %}
+<a href="{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
 {% endif %}
+
+    {% if end is sameas(false) %}
+        <a href="{{ nextpage }}">Next Page</a>
+    {% endif %}
+
+{% endif %}
+<a href="#top" style="float: right">^</a>
 </div>
 {% endblock %}
+
+{% if nextpage is defined and (nextpage != 1) %}
+{% set pagename = findby.Category ~ " :: "|default("") ~ "Page: " ~ (nextpage - 1) %}
+{% endif%}

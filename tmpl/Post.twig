@@ -1,20 +1,23 @@
 {% extends "Main.twig" %}
 
 {% set pagename = a.Title %}
+
 {% block articles %}
 <div class="article">
     <div id='articlehead'>
-        <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+        <h2><a href="/article/{{ a.Title|url_encode() }}/{{ a._id }}">{{ a.Title }}</a></h2> :: <small>{{ a.Author }}</small> :: {{ a.Date.sec|date("d/m/Y @ H:i") }}
     </div>
-    <div id='body'>{{a.Body|markdown}}</div>
-</div>
+
+        <div id='body' >{{ a.Body|markdown }}</div>
+    <div id="tags">Tags: {{ a.Tags|join(", ") }}</div>
+    </div>
 <div id="pre_footer">
     <a href="#" onclick="window.history.back()">Back</a>
 </div>
 {% endblock %}
 
 {% block opengraph %}
-{% set url = {'article_title': a.Title|url_encode() } %}
+{% set url = {'article_title': a.Title|url_encode(), 'id': a._id } %}
 <meta property="og:title" content="{{ a.Title }}" />
 <meta property="og:type" content="article" />
 <meta property="og:description" content="{{a.Body|markdown|striptags}}" />
@@ -27,5 +30,22 @@
 
 <meta name="keywords" content="{{ a.Tags|join(',') }}" />
 <meta name="description" content="{% block description %}{% endblock %}" />
+{{ parent() }}
+{% endblock %}
+
+{% block commentform %}
+<div id="commentpost">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = '{{ constant('DISQUS_SHORTNAME') }}';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
 {{ parent() }}
 {% endblock %}
