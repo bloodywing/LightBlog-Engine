@@ -37,7 +37,6 @@ function get_articles($range = 0, $findby = array()) {
         $posts[] = $post;
     }
     
-    
     return ($posts !== null) ? $app['twig']->render('Articles.twig', array('articles' => $posts, 'nextpage' => $range + 1, 'end' => $end, 'findby' => $findby )) : $app->redirect('/',301) ;
 }
 
