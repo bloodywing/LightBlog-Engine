@@ -1,0 +1,7 @@
+<div id='userbar'>
+    <a href="/" class="navlink" >Home</a>
+    {{ app.request.get('pageName') == "account" ? null : '<a href="/account" class="navlink" >Admin Panel</a>' }}
+    {{ app.request.get('subpage') == "links" ? null : '<a href="/admin/links" class="navlink" >Manage Links</a>'}}
+    {{ app.request.get('subpage') == "images" ? null : '<a href="/admin/images" class="navlink" >Manage Images</a>'}}
+    <span class="navright"><a href="/logout" class="navlink">Logout</a></span>
+</div>

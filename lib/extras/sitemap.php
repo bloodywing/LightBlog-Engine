@@ -18,7 +18,7 @@ $cursor = $article->getAll($app);
          */
         $posts[] = $post;
     }
-return new Response($app['twig']->display('misc/sitemap.twig', array('articles' => $posts)), 
+return new Response($app['twig']->render('misc/sitemap.twig', array('articles' => $posts)), 
         200, 
         array('Content-Type' => 'text/xml'));
 ?>

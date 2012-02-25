@@ -1,0 +1,25 @@
+{% extends "Main.twig" %}
+
+{% block content %}
+<div id="forms">
+<form method="POST" action="/admin/links/add">
+    <p><label>Link Target</label></p>
+    <input name="Target"/>
+    <p><label>Category</label></p>
+    <input name="Category"/>
+    <p><label>Title</label></p>
+    <input name="Title" />
+    <input type="submit"/>
+</form>
+        <hr style="border: 5px double #333333;"/>
+
+{% for l in links %}
+                <br />
+                <span>{{ l.Title }}</span> <a href="{{ l.Target }}">{{ l.Target }}</a> :: Category: <span>{{ l.Category }}</span>
+                <form action="/admin/link/del" method="POST" style="display: inline">
+                <input hidden="true" name="link_id" value="{{ l._id }}"/><input type="submit" value="Delete"/>
+                </form>
+                
+{% endfor %}
+</div>
+{% endblock %}

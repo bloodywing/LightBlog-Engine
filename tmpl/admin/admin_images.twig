@@ -1,0 +1,20 @@
+{% extends "Main.twig" %}
+
+{% block content %}
+<div id="forms">
+<form method="POST" enctype="multipart/form-data" action="/admin/images/add">
+    <p><label>File</label></p>
+    <input name="File" type="file"/>
+    <input type="submit"/>
+</form>
+        <hr style="border: 5px double #333333;"/>
+{% for i in images %}
+                <br />
+                <img src="{{ app.url_generator.generate('image', { 'image' : i.Filename } , 0) }}" />
+                <form action="/admin/image/del" method="POST" style="display: inline">
+                <input hidden="true" name="image_id" value="{{ i._id }}"/><input type="submit" value="Delete"/>
+                </form>
+                <p>{{ app.url_generator.generate('image', { 'image' : i.Filename } , 0) }}</p>
+{% endfor %}
+</div>
+{% endblock %}

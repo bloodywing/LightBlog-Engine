@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {% for a in articles %}
         <url>
-            <loc>{{ app.url_generator.generate('article_url', {'article_title' : a.Title|url_encode}, 1) }}</loc>
-            <lastmod>{{ a.Date|date('c') }}</lastmod>
+            <loc>{{ app.url_generator.generate('article_url', { 'article_title' : a.Title|url_encode, 'id': a._id }, 1) }}</loc>
+            <lastmod>{{ a.Date.sec|date('c') }}</lastmod>
             <changefreq>daily</changefreq>
             <priority>0.5</priority>
         </url>

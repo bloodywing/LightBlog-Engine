@@ -1,24 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xml:lang="de">
-    <head>
-        {% include "misc/css.twig" %}
+        <head>
             {% block opengraph %}
             {% endblock %}
             {% block article_meta %}
             {% include "misc/head.twig" %}
             {% endblock %}
-            <title>{{ constant('BLOGNAME') }} :: {{ pagename|default('Index') }}</title>        
+            <link rel="stylesheet" type="text/css" href="/main.css" media="all" />
+            <link rel="canonical" href="{{ canonical|default("") }}" />
+            <title>{{ constant('BLOGNAME') }} - {{ constant('BLOGSLOGAN') }} :: {{ pagename|default('Index') }}</title>        
+            
+        {% include "misc/tools/ga.twig" %}
         </head>
         <body>
-        {% include "misc/navigation.twig" %}
-                <div id="content">
+            {% if app.session.get('user') %}
+                {% include "misc/user_bar.twig" %}
+            {% endif %}
+            
+                {% if  (app.request.get('pageName') != "account") %}
+        <div id="slogan"><h1><em>{{ constant('BLOGSLOGAN') }}</em></h1></div>
+                {% include "misc/navigation.twig" %}
+                {% endif %}
+        <div id="content">
         {% block mini_login %}
         {% endblock %}            
         {% block quickpost %}
+                        {% set article_form = true %}
+        {% endblock %}
+                
+        {% block content %}
         {% endblock %}
                     
         {% block articles %}
         {% endblock %}
+                        {% block commentform %}
+                        
+                        {% endblock %}
                     </div>
                 {% include "misc/footer.twig" %}
                 </body>

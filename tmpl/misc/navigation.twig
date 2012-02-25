@@ -1,11 +1,17 @@
 <div id="nav">
-    <ul>
-        <li>
     
     <a href="/" class="navlink">Home</a>
-    {% if a%}
-     <a href="/article/{{ a.Title|url_encode }}">{{ a.Title }}</a>
+    {% if a.Title is defined %}
+     <a href="/article/{{ a.Title|url_encode }}/{{ a._id }}" class="navlink">{{ a.Title }}</a>
     {% endif%}
-        </li>
-    </ul>
+    
+    {% if category is defined %}
+     <a href="/category/{{ category }}" class="navlink">{{ category|upper }}</a>
+    {% endif%}
+    
+     
+     <span class="navright">
+            <a href="https://www.ohloh.net/p/lightblogengine" class="navlink">Ohloh</a>
+            <a href="https://github.com/bloodywing/LightBlog-Engine" class="navlink">GitHub</a>
+     </span>   
 </div>

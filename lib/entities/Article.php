@@ -13,6 +13,7 @@ class Article {
             $title,
             $body,
             $date,
+            $category,
             $tags = array();
     
     /**
@@ -29,6 +30,7 @@ class Article {
             'Title'  => $this->title,
             'Body'   => $this->body,
             'Date'   => $this->date,
+            'Category' => $this->category,
             'Tags'   => $this->tags
         );
         return $collection->update(array('_id' => new \MongoId($this->getId())), $self, array('upsert' => true));
@@ -54,14 +56,15 @@ class Article {
      * @param \Silex\Application $app
      * @return \Doctrine\MongoDB\Cursor
      */
-    public function getRange(\Silex\Application $app, $range) {
+    public function getRange(\Silex\Application $app, $range, $findby = array()) {
         /* @var $db \Doctrine\MongoDB\Connection */
         $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'articles');
-        return $collection->find()->sort(array('_id' => 0))->limit(ARTICLE_LIMIT)->skip($range * ARTICLE_LIMIT);
+        return $collection->find($findby)->sort(array('Date' => -1))->limit(ARTICLE_LIMIT)->skip($range * ARTICLE_LIMIT);
     }
 
+    
     /**
      * Gets a single Article
      * @param \Silex\Application $app
@@ -69,7 +72,7 @@ class Article {
      * @param mixed $term Term to search for
      * @return mixed 
      */
-    public function getOne(\Silex\Application $app, $field = 'Title', $term) {
+    public function getOne(\Silex\Application $app, $field, $term) {
         /* @var $db \Doctrine\MongoDB\Connection */
         $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
@@ -82,7 +85,7 @@ class Article {
         
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'articles');
-        var_dump($collection->remove(array('_id' => new \MongoId($id))));
+        return $collection->remove(array('_id' => new \MongoId($id)));
     }
 
 
@@ -132,6 +135,14 @@ class Article {
 
     public function setTags($tags) {
         $this->tags = $tags;
+    }
+
+    public function getCategory() {
+        return $this->category;
+    }
+
+    public function setCategory($category) {
+        $this->category = $category;
     }
 
 

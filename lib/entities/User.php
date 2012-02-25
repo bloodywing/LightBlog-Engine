@@ -11,7 +11,8 @@ class User {
     private $name,
             $password,
             $author,
-            $email;
+            $email,
+            $access;
     /**
      *
      * @param Silex\Application $app 
@@ -22,14 +23,21 @@ class User {
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'Users');
         $self = array(
-            'Name' => $this->name,
-            'Author'  => $this->author,
-            'Password'   => crypt($this->password, SALT),
-            'Email'  => $this->email
+            'Name' => $this->getName(),
+            'Author'  => $this->getAuthor(),
+            'Password'   => crypt($this->getPassword(), SALT),
+            'Email'  => $this->getEmail(),
+            'Access' => $this->getAccess()
         );
         $collection->insert($self);
     }
 
+    /**
+     *
+     * @param \Silex\Application $app
+     * @param array $user
+     * @return mixed 
+     */
     public function getUserinfo(\Silex\Application $app, $user) {
         /* @var $db \Doctrine\MongoDB\Connection */
         $db =  $app['mongodb'];
@@ -69,6 +77,14 @@ class User {
 
     public function setEmail($email) {
         $this->email = $email;
+    }
+    
+    public function getAccess() {
+        return $this->access;
+    }
+
+    public function setAccess($access) {
+        $this->access = $access;
     }
 
 }

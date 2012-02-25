@@ -3,40 +3,71 @@
 {% extends "Main.twig" %}
 
 {% block articles %}
-{% set pagename = 'Articles' %}
+<a id="top"></a>
 {% for a in articles %}
 
-<div class="article">
-<div class='articlehead'>
-    <h2><a href="/article/{{ a.Title|url_encode() }}">{{ a.Title }}</a></h2> :: 
-    <small>{{ a.Author }}</small> :: {{ a.Date|date("d/m/Y @ H:i") }}
+{% set url = {'article_title': a.Title|url_encode(), 'id': a._id } %}
+
+<div class="article {{ cycle(['odd', 'even'], loop.index) }}">
+    <div class='articlehead'>
+        <h2><a id="{{'a' ~ loop.index }}" href="{{ app.url_generator.generate('article_url', url, 0) }}">{{ a.Title }}</a></h2><small> :: 
+    {{ a.Author }} :: {{ a.Date.sec|date("d/m/Y") }}</small>
     {% if app.session.get('user') %}
-    <div class="article_tools">
-    <em><form action="/del" method="POST">
-            <input hidden="true" name="article_id" value="{{ a._id }}"/>
-            <input type="submit" value="Delete"/></form></em>
-    
-    <em><form action="/edit" method="POST">
-            <input hidden="true" name="article_id" value="{{ a._id }}"/>
-            <input type="submit" value="Edit"/></form></em>
+            <div class="article_tools">
+                <em><form action="/del" method="POST">
+                        <input hidden="true" name="article_id" value="{{ a._id }}"/>
+                        <input type="submit" value="Delete"/></form></em>
+
+                <em><form action="/edit" method="POST">
+                        <input hidden="true" name="article_id" value="{{ a._id }}"/>
+                        <input type="submit" value="Edit"/></form></em>
             </div>
     {% endif %}
-</div>
-<div class='body'>
+        </div>
+        <div class='body'>
     {{ a.Body|markdown}}
-</div>
-</div>
+
+            </div>
+{% if a.Category is defined %}
+            <span>Category: </span> <a href="{{ app.url_generator.generate('category_url', { 'category' : a.Category }, 0) }}">{{ a.Category|title }}</a>
+{% endif %}
+        </div>
 {% endfor %}
 
-<div id="pre_footer">
+        <div id="pre_footer">
+
 {# Next/Prev Page Links #}
+{% if findby.Category  is defined %}
 {% if nextpage - 2 == 0 %}
-        <a href="/">First Page</a> |&nbsp;
+            <a href="/category/{{findby.Category}}">First Page</a> |&nbsp;
 {% elseif nextpage - 2 > 0 %}
-<a href="/{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
+            <a href="/category/{{findby.Category}}/{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
 {% endif %}
-{% if end is sameas(false) %}
-<a href="/{{ nextpage }}">Next Page</a>
+
+    {% if end is sameas(false) %}
+            <a href="/category/{{findby.Category}}/{{ nextpage }}">Next Page</a>
+    {% endif %}
+{% else %}
+
+{% if nextpage - 2 == 0 %}
+            <a href="/">First Page</a> |&nbsp;
+{% elseif nextpage - 2 > 0 %}
+            <a href="{{ nextpage - 2 }}">Prev Page</a> |&nbsp;
 {% endif %}
-</div>
+
+    {% if end is sameas(false) %}
+            <a href="{{ nextpage }}">Next Page</a>
+    {% endif %}
+
+{% endif %}
+            <a href="#top" style="float: right">^</a>
+        </div>
 {% endblock %}
+
+{% if nextpage is defined and (nextpage != 1) %}
+{% if findby.Category  is defined %}
+{% set pagename = findby.Category ~ " :: "|default("") ~ "Page: " ~ (nextpage - 1) %}
+{% else %}
+{% set pagename = "Page: " ~ (nextpage - 1) %}
+{% endif %}
+{% endif%}

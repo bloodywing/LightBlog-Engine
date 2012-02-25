@@ -9,8 +9,9 @@
         define('LIB', __DIR__.'/lib');
     }
     
-    require LIB.'/constants.php';
+    require (file_exists(LIB.'/constants.php')) ? LIB.'/constants.php' : LIB.'/constants.dist.php';
     require LIB.'/publish.php';
+    require LIB.'/additions.php';
     
     blog_run();
 ?>

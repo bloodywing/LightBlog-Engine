@@ -1,5 +1,3 @@
-<style type="text/css">
-
         {# Some common Vars here, you can add more, like a color you use really often
            You don't need to use Twig for CSS, you can do it like the regular way too,
            but it shows you that twig isn't limited to HTML Templates.
@@ -13,88 +11,202 @@
         {% set navigationwidth = "50%" %}
         {% set bgcolor = "#02071F" %}
         {% set linkcolor = "#04114D" %}
-        * { -webkit-border-radius: 2px;
-            -moz-border-radius: 2px;
-            border-radius: 2px;}
-        html { color: #000; background: {{ bgcolor }}; padding: 10px }
-        body { font: 12px Verdana, Arial, sans-serif; color: #555 }
-        img { border: 0; }
-        h2 {display: inline-block; margin: 1em 5px 0px 0 }
-        #content { width: {{ contentwidth }}; margin:0 auto; padding: 25px; 
-                   -webkit-border-radius: 5px;
-                   -moz-border-radius: 5px;
-                   border-radius: 5px;
+* { -webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;}
+html { color: #000; background: #333; padding: 10px 
+background-image: linear-gradient(bottom, rgb(0,0,0) 15%, rgb(43,46,46) 69%);
+background-image: -o-linear-gradient(bottom, rgb(0,0,0) 15%, rgb(43,46,46) 69%);
+background-image: -moz-linear-gradient(bottom, rgb(0,0,0) 15%, rgb(43,46,46) 69%);
+background-image: -webkit-linear-gradient(bottom, rgb(0,0,0) 15%, rgb(43,46,46) 69%);
+background-image: -ms-linear-gradient(bottom, rgb(0,0,0) 15%, rgb(43,46,46) 69%);
 
-        }
-        #footer {width: {{ contentwidth }}; margin: 0 auto;}
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.15, rgb(0,0,0)),
+	color-stop(0.69, rgb(43,46,46))
+);
 
-        /*
-        Article Elements
-        */
-        .article, #forms{background: #fff;
-                 -moz-box-shadow: 0px 5px 4px #000;
-                 -webkit-box-shadow: 0px 5px 4px #000;
-                 box-shadow: 0px 5px 4px #000;
-        }
-        .article a{color: {{ linkcolor }}}
-        .article, #forms{padding: 1em}
-        .article, #forms{margin-bottom: 1em}
-        .article_tools {margin-top: 1em}
-        .article_tools em {display: inline-block}
-        .article_tools input {border-style: none}
-        
-        #forms input {
-            border: 1px solid #333; 
-            }
-        
-        /*
-        Navigation Elements
-        */
+}
+body { font: 12px Liberation Sans, DejaVu Sans, sans-serif; color: #555; margin: 0; 
+display: inline-block;
+background: url("/tmpl/images/footer-bg.jpg") repeat scroll 0 0 transparent;
+width: 100%;
+/* Liberation Sans, DejaVu Sans, sans-serif */
+}
 
-        #nav, #pre_footer {
-            margin: 0 auto;
-            width: {{ navigationwidth }};
-            height: 50px;
-            background: #fff;
-            color: #666;
+img { border: 0; }
+h2 {display: inline-block; margin: 1em 5px 0px 0 }
+#content { width: {{ contentwidth }}; margin:0 auto; padding: 25px; 
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+min-height: 315px;
 
-        }
-        
-        #pre_footer {
-              padding: 2%;
-              width: 96%;
-              height: 24px;
-        }
-        
-        #nav ul {
-            float: left;
-            padding-left: 2%;
-        }
-        #nav a, #pre_footer a {
-            color: #fff;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-            display: block;
-            margin: 0 5px 5px 0;
-            padding: 4px 5px;
-            float: left;
-            font-size: 12px;
-            background: {{ bgcolor }};
+}
+#footer {width: {{ contentwidth }}; margin: 0 auto;}
 
-            text-decoration: none;
-        }
-        
-        #pre_footer a {
-            float: none;
-            display: inline-block;
-        }
-        
-        #footer * {
-            color: #fff;
-        }
-        
-        #nav * {
-            list-style: none;
-        }
-    </style>
+/*
+Article Elements
+*/
+.article, #forms{background: #fff;
+-moz-box-shadow: 0px 5px 4px #000;
+-webkit-box-shadow: 0px 5px 4px #000;
+box-shadow: 0px 5px 4px #000;
+}
+.article a{color: {{ linkcolor }}}
+.article, #forms{padding: 1em}
+.article, #forms{margin-bottom: 1em}
+.odd {
+    color: #000;
+}
+
+.article {
+background-image: linear-gradient(bottom, rgb(214,212,207) 0%, rgb(255,255,255) 73%);
+background-image: -o-linear-gradient(bottom, rgb(214,212,207) 0%, rgb(255,255,255) 73%);
+background-image: -moz-linear-gradient(bottom, rgb(214,212,207) 0%, rgb(255,255,255) 73%);
+background-image: -webkit-linear-gradient(bottom, rgb(214,212,207) 0%, rgb(255,255,255) 73%);
+background-image: -ms-linear-gradient(bottom, rgb(214,212,207) 0%, rgb(255,255,255) 73%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(214,212,207)),
+	color-stop(0.73, rgb(255,255,255))
+);
+}
+
+.article_tools {margin-top: 1em}
+.article_tools em {display: inline-block}
+.article_tools input {border-style: none}
+
+#forms input {
+border: 1px solid #333; 
+}
+
+/**
+ Blogslogan   
+*/
+
+#slogan {
+    width: 50%;
+    margin: 0 auto;
+    color: #bbb;
+}
+
+#slogan h1 {
+    text-shadow: 2px 2px 2px #000;
+}
+
+/*
+Navigation Elements
+*/
+
+#nav, #pre_footer {
+margin: 0 auto;
+width: {{ navigationwidth }};
+height: 50px;
+background: #fff;
+color: #666;
+
+}
+
+#nav, #pre_footer {
+padding: 2%;
+width: 96%;
+height: 24px;
+}
+
+#nav {
+width: 48%;
+padding: 1%;
+}
+
+.navright {
+float: right;
+}
+
+.navlink, #pre_footer a {
+color: #fff;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+display: block;
+margin: 0 5px 5px 0;
+padding: 4px 5px;
+float: left;
+font-size: 12px;
+background: {{ bgcolor }};
+
+text-decoration: none;
+}
+
+#pre_footer a, #nav a {
+float: none;
+display: inline-block;
+}
+
+#footer {
+    padding: 5%;
+    text-align: center;
+    width: 90%;
+    
+    -webkit-box-shadow: inset 0px 5px 10px 0px #000;
+    -moz-box-shadow: inset 0px 5px 10px 0px #000;
+    box-shadow: inset 0px 5px 10px 0px #000; 
+}
+
+#footer * {
+color: #fff;
+}
+
+.footer_content {
+    text-align: left;
+    }
+    
+.blockelement {
+    display: inline-block;
+    float: left;
+    margin: 0 2em;
+}
+
+.blockelement ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+#editor ul {
+list-style: none;
+}
+
+#editor textarea {
+font-size: 0.85em;
+width: 100%;
+}
+
+#commentpost a {
+    color: #fff;
+}
+
+#userbar {
+    width: 99%;
+    background: #000;
+    height: 24px;
+    -webkit-box-shadow: 0px 5px 10px 0px #000;
+    -moz-box-shadow: 0px 5px 10px 0px #000;
+    box-shadow: 0px 5px 10px 0px #000;
+    padding: 0.5%;
+}
+
+#userbar .navlink {
+background-image: linear-gradient(bottom, rgb(204,204,204) 30%, rgb(255,255,255) 67%);
+background-image: -o-linear-gradient(bottom, rgb(204,204,204) 30%, rgb(255,255,255) 67%);
+background-image: -moz-linear-gradient(bottom, rgb(204,204,204) 30%, rgb(255,255,255) 67%);
+background-image: -webkit-linear-gradient(bottom, rgb(204,204,204) 30%, rgb(255,255,255) 67%);
+background-image: -ms-linear-gradient(bottom, rgb(204,204,204) 30%, rgb(255,255,255) 67%);
+color: #222;
+border: 1px solid grey;
+}
