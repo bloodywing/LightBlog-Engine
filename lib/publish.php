@@ -18,7 +18,6 @@ function get_articles($range = 0, $findby = array()) {
     /* @var $app Silex\Application */
     global $app;
     
-    //$collection = 'articles';
     $article = new Article();
     /* @var $cursor Doctrine\MongoDB\LoggableCursor */
         $cursor = $article->getRange($app, $range, $findby);
@@ -31,9 +30,6 @@ function get_articles($range = 0, $findby = array()) {
         
     $posts = null;
     foreach ($cursor->toArray() as $post) {
-        /**
-         * Clean Code :)
-         */
         $posts[] = $post;
     }
     
@@ -48,7 +44,6 @@ function get_articles($range = 0, $findby = array()) {
  */
 function get_article($title, $id) {
     global $app;
-
     /** Revert Title */
     $original_title = urldecode($title);
     $article = new Article();
@@ -104,6 +99,7 @@ function post_article($postdata, $update = false) {
  */
 function get_categories() {
     global $app;
+    $categories = array();
     $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'articles');
@@ -111,12 +107,8 @@ function get_categories() {
         
         
     foreach ($cursor->toArray() as $category) {
-        /**
-         * Clean Code :)
-         */
         $categories[] = $category['Category'];
     }
-    
     $categories = array_unique($categories);
     
     return $categories;
@@ -124,6 +116,7 @@ function get_categories() {
 
 function get_links() {
     global $app;
+    $links = array();
     $db =  $app['mongodb'];
         /* @var $collection \Doctrine\MongoDB\LoggableCollection */
         $collection = $db->selectCollection(MONGODB, 'links');

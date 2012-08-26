@@ -1,5 +1,5 @@
 <?php
-require 'silex.phar';
+require __DIR__.'/../vendor/autoload.php';
 
 /** @var $app Silex\Application */
 $app = new Silex\Application();
@@ -17,26 +17,15 @@ $app = new Silex\Application();
  * Twig as Tempatesystem 
  */
 
-$app['autoloader']->registerNamespace('SilexExtension', __DIR__ . '/../vendor/silex-extensions/src');
-$app['autoloader']->register();
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.class_path' => __DIR__.'/../vendor/twig/lib',
     'twig.path'     => __DIR__.'/../tmpl/'
 ));
 $app['twig']->addExtension(new Twig_Extension_Debug());
 
-use Symfony\Component\ClassLoader\UniversalClassLoader;
-
-$loader = new UniversalClassLoader();
-$loader->registerNameSpace('entities', __DIR__);
-$loader->register();
-
 /**
  * Symfony Validator Extension 
  */
-$app->register(new Silex\Provider\ValidatorServiceProvider(), array(
-    'validator.class_path' => __DIR__.'/../vendor/symfony/src'
-));
+$app->register(new Silex\Provider\ValidatorServiceProvider());
 
 /**
  * Markdown Support
@@ -68,7 +57,8 @@ $app->register(new SilexExtension\MarkdownExtension(), array(
  * MongoDB 
  */
 $app->register(new SilexExtension\MongoDbExtension(), array(
-    'mongodb.class_path'    =>  __DIR__.'/../vendor/mongodb/lib',
+    // Deprecated now
+    //'mongodb.class_path'    =>  __DIR__.'/../vendor/mongodb/lib',
     'mongodb.connection'    =>  array(
         'configuration' =>  function($configuration) {
         $configuration->setLoggerCallable(function($logs){

@@ -7,7 +7,7 @@
 {% block articles %}
 <div class="article">
     <div id='articlehead'>
-        <h2><a id="{{'a' ~ loop.index }}" href="{{ app.url_generator.generate('article_url', url, 0) }}">{{ a.Title }}</a></h2><small> :: 
+        <h2><a id="{{'a' ~ loop.index|default("0") }}" href="{{ app.url_generator.generate('article_url', url, 0) }}">{{ a.Title }}</a></h2><small> :: 
             <span rel="author">{{ a.Author }}</span> :: <span class="entryDate">{{ a.Date.sec|date("d/m/Y") }}</span></small></div>
 
         <div id='body' class="entry">{{ a.Body|markdown }}</div>

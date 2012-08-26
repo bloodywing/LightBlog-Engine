@@ -35,7 +35,7 @@ function do_register($postdata) {
  *
  * @global Silex\Application $app
  * @global User $user
- * @return array 
+ * @return boolean 
  */
 function do_login($postdata) {
     global $app, $user;

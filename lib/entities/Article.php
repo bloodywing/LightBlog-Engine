@@ -13,7 +13,7 @@ class Article {
             $title,
             $body,
             $date,
-            $category,
+            $category = "Default",
             $tags = array();
     
     /**
