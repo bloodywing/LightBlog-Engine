@@ -1,2 +1,7 @@
 You need to create the file lib/constans.php
 The file lib/constants.dist.php is a Template for it.
+
+
+Instaling the Dummy Article:
+
+mongoimport -d blog -c articles --file contribution/articles.json
